@@ -2,36 +2,36 @@ package com.zk.samplenewsapp.views
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.ItemAnimator
+import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.zk.samplenewsapp.*
+import com.zk.samplenewsapp.R
+import com.zk.samplenewsapp.databinding.FragmentArticleListBinding
 import com.zk.samplenewsapp.mainLIst.ArticleRecyclerViewAdapter
 import com.zk.samplenewsapp.mainLIst.VerticalSpaceItemDecoration
+import com.zk.samplenewsapp.model.Article
 import com.zk.samplenewsapp.model.Articles
 import com.zk.samplenewsapp.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.fragment_article_list.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fragment_article_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ArticleListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    private val LOGGER = ArticleListFragment::class.qualifiedName
+	companion object {
+		val TAG = ArticleListFragment::class.qualifiedName
+		fun newInstance(): ArticleListFragment {
+			return ArticleListFragment()
+		}
+	}
 
-    private val adapter: ArticleRecyclerViewAdapter =
-        ArticleRecyclerViewAdapter()
-
-    private val observer = Observer<Articles?> { articles ->
-        Log.d(LOGGER, "Data: $articles")
-        articles?.let { news ->  adapter.update(news.articles)}
-        view?.swiperefresh?.isRefreshing = false
-    }
+	private val articlesAdapter: ArticleRecyclerViewAdapter = ArticleRecyclerViewAdapter()
 
     // Lazy Inject ViewModel
     private val viewModel: MainViewModel by viewModel()

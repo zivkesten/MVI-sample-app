@@ -1,3 +1,9 @@
 package com.zk.samplenewsapp.model
 
-data class Source(val id: String, val name: String)
+import com.google.gson.annotations.SerializedName
+
+data class Source(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("name")
+    val name: String)
