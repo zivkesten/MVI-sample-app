@@ -1,6 +1,8 @@
 package com.zk.samplenewsapp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.*
+import com.zk.samplenewsapp.model.Article
 import com.zk.samplenewsapp.model.Articles
 import com.zk.samplenewsapp.repository.Repository
 import kotlinx.coroutines.Dispatchers

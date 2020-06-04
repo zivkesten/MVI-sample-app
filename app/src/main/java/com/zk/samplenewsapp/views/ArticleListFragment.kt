@@ -8,21 +8,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.ItemAnimator
-import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.zk.samplenewsapp.R
 import com.zk.samplenewsapp.databinding.FragmentArticleListBinding
 import com.zk.samplenewsapp.mainLIst.ArticleRecyclerViewAdapter
+import com.zk.samplenewsapp.mainLIst.OnItemClickListener
 import com.zk.samplenewsapp.mainLIst.VerticalSpaceItemDecoration
 import com.zk.samplenewsapp.model.Article
 import com.zk.samplenewsapp.model.Articles
 import com.zk.samplenewsapp.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_article_list.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class ArticleListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class ArticleListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
 	companion object {
 		val TAG = ArticleListFragment::class.qualifiedName
@@ -31,7 +30,7 @@ class ArticleListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 		}
 	}
 
-	private val articlesAdapter: ArticleRecyclerViewAdapter = ArticleRecyclerViewAdapter()
+	private val articlesAdapter: ArticleRecyclerViewAdapter = ArticleRecyclerViewAdapter(listener = this)
 
     // Lazy Inject ViewModel
     private val viewModel: MainViewModel by viewModel()

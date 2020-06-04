@@ -1,5 +1,6 @@
 package com.zk.samplenewsapp.mainLIst
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,11 +9,16 @@ import com.squareup.picasso.Picasso
 import com.zk.samplenewsapp.databinding.ArticleListItemBinding
 import com.zk.samplenewsapp.model.Article
 
-class ArticleRecyclerViewAdapter(private var values: List<Article> = ArrayList()) : RecyclerView.Adapter<ArticleRecyclerViewAdapter.ViewHolder>() {
+class ArticleRecyclerViewAdapter(private var values: List<Article> = ArrayList(), private val listener: OnItemClickListener) : RecyclerView.Adapter<ArticleRecyclerViewAdapter.ViewHolder>() {
 
-    fun update(articles: List<Article>) {
-        values = articles
-        notifyDataSetChanged()
+    fun update(articles: ArrayList<Article>) {
+        if (values.isEmpty()) {
+            values = articles
+            notifyDataSetChanged()
+            return
+        }
+        val diffResult = DiffUtil.calculateDiff(ArticleListDiffUtil(values, articles))
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,6 +39,9 @@ class ArticleRecyclerViewAdapter(private var values: List<Article> = ArrayList()
                 primaryText.text = item.title
                 subText.text = item.description
                 Picasso.get().load(item.urlToImage).into(mediaImage)
+                binding.root.setOnClickListener {
+                    listener.onItemClick(item)
+                }
             }
         }
     }
