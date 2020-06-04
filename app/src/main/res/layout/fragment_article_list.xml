@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list"
-        android:name="com.zk.samplenewsapp.ArticleListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".views.ArticleListFragment"
-        tools:listitem="@layout/article_list_item" />
+		<androidx.recyclerview.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+			xmlns:tools="http://schemas.android.com/tools"
+			android:id="@+id/list"
+			android:name="com.zk.samplenewsapp.ArticleListFragment"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			app:layoutManager="LinearLayoutManager"
+			tools:context=".views.list.ArticleListFragment"
+			tools:listitem="@layout/article_list_item" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

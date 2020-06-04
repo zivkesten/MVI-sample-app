@@ -13,11 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".views.ArticleActivity"
-            android:label="@string/title_activity_article"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".views.detail.ArticleActivity"/>
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.list.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

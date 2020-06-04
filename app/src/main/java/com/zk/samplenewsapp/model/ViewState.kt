@@ -13,6 +13,6 @@ sealed class ViewEffect {
 
 sealed class Event {
     object screenLoadEvent : Event()
-    object addToHistoryEvent : Event()
+    object addToFavouritesEvent : Event()
     object tapLink : Event()
 }

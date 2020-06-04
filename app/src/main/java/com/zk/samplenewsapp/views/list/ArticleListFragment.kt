@@ -1,4 +1,4 @@
-package com.zk.samplenewsapp.views
+package com.zk.samplenewsapp.views.list
 
 import android.os.Bundle
 import android.util.Log
@@ -32,41 +32,44 @@ class ArticleListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, On
 
 	private val articlesAdapter: ArticleRecyclerViewAdapter = ArticleRecyclerViewAdapter(listener = this)
 
-    // Lazy Inject ViewModel
-    private val viewModel: MainViewModel by viewModel()
+	// Lazy Inject ViewModel
+	private val viewModel by sharedViewModel<MainViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_article_list, container, false)
-        viewModel.fragmentContent.observe(viewLifecycleOwner, observer)
-        // Set the adapter
-        val dividerItemDecoration =
-            VerticalSpaceItemDecoration(30)
-        view.list.layoutManager = LinearLayoutManager(context)
-        view.list.addItemDecoration(dividerItemDecoration)
-        view.list.adapter = adapter
+	override fun onCreateView(
+		inflater: LayoutInflater, container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		val binding = FragmentArticleListBinding.inflate(inflater, container, false)
 
-        return view
-    }
+		binding.swiperefresh.setOnRefreshListener(this)
+		observeNews()
+		binding.list.apply {
+			layoutManager = LinearLayoutManager(context)
+			addItemDecoration(VerticalSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.list_item_decoration)))
+			adapter = articlesAdapter
+		}
 
-    override fun onStart() {
-        super.onStart()
-        CoroutineScope(Dispatchers.IO).launch {
-            viewModel.getNewsFromApi()
-        }
-    }
+		if (savedInstanceState == null) {
+			viewModel.getNewsFromApi()
+		}
 
-    companion object {
-        fun newInstance(): ArticleListFragment {
-            return ArticleListFragment()
-        }
-    }
+		return binding.root
+	}
 
-    override fun onRefresh() {
-        CoroutineScope(Dispatchers.IO).launch {
-            viewModel.getNewsFromApi()
-        }
-    }
+	private fun observeNews() {
+		viewModel.fragmentContent.observe(viewLifecycleOwner, Observer<Articles?> { articles ->
+			Log.d(TAG, "Data: $articles")
+			articles?.let { articlesAdapter.update(articles.articles as ArrayList<Article>) }
+			swiperefresh.isRefreshing = false
+		})
+	}
+
+	override fun onRefresh() {
+		viewModel.getNewsFromApi()
+	}
+
+	override fun onItemClick(item: Article) {
+		//Log.d("Zivi", "tap: "+item.title)
+		viewModel.itemClicked(item)
+	}
 }

@@ -1,4 +1,4 @@
-package com.zk.samplenewsapp
+package com.zk.samplenewsapp.views.detail
 
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import com.zk.samplenewsapp.viewModel.ArticleViewModel
 import com.zk.samplenewsapp.databinding.ArticleFragmentBinding
 import com.zk.samplenewsapp.model.Event
 import com.zk.samplenewsapp.model.ViewEffect
@@ -36,7 +37,7 @@ class ArticleFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener { view ->
-            viewModel.event(Event.addToHistoryEvent)
+            viewModel.event(Event.addToFavouritesEvent)
         }
         return binding.root
     }

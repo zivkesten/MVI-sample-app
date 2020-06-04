@@ -1,9 +1,10 @@
-package com.zk.samplenewsapp
+package com.zk.samplenewsapp.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zk.samplenewsapp.R
 import com.zk.samplenewsapp.model.*
 
 class ArticleViewModel : ViewModel() {
@@ -35,7 +36,9 @@ class ArticleViewModel : ViewModel() {
         when(event) {
             is Event.screenLoadEvent -> Log.d("Zivi", "article screen loaded")
             is Event.tapLink -> viewAction.postValue(ViewEffect.OpenLinkExternally(item))
-            is Event.addToHistoryEvent -> viewAction.postValue(ViewEffect.ShowSnackBar(R.string.button_result_text))
+            is Event.addToFavouritesEvent -> viewAction.postValue(ViewEffect.ShowSnackBar(
+                R.string.button_result_text
+            ))
         }
     }
 }
