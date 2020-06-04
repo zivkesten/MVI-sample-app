@@ -24,25 +24,10 @@ class ArticleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
-        setSupportActionBar(findViewById(R.id.toolbar))
         viewModel.article(intent.getParcelableExtra("ziv"))
         supportFragmentManager
             .beginTransaction()
             .add(R.id.article_container, ArticleFragment.newInstance())
             .commit()
-
-        viewModel.obtainState.observe(this, Observer {
-            Picasso.get().load(it.backDrop).into(findViewById<ImageView>(R.id.backdrop))
-        })
-
-
-
-
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
-
     }
 }

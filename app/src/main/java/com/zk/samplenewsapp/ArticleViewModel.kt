@@ -24,8 +24,7 @@ class ArticleViewModel : ViewModel() {
             val state = ViewState(
                 article.urlToImage,
                 article.title?: "",
-                article.description?: "",
-                article.url
+                article.description?: ""
             )
             item = article
             viewState.postValue(state)
@@ -35,7 +34,8 @@ class ArticleViewModel : ViewModel() {
     fun event(event: Event) {
         when(event) {
             is Event.screenLoadEvent -> Log.d("Zivi", "article screen loaded")
-            is Event.addToHistoryEvent -> viewAction.postValue(ViewEffect.OpenLinkExternally(item))
+            is Event.tapLink -> viewAction.postValue(ViewEffect.OpenLinkExternally(item))
+            is Event.addToHistoryEvent -> viewAction.postValue(ViewEffect.ShowSnackBar(R.string.button_result_text))
         }
     }
 }

@@ -98,4 +98,5 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="image">image</string>
     <string name="go_to_article">Go to article</string>
+    <string name="button_result_text">Added to favorites</string>
 </resources>
