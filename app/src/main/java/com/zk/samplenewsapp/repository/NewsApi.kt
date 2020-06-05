@@ -4,7 +4,6 @@ import com.zk.samplenewsapp.model.Articles
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 val apiModule = module {
     single {

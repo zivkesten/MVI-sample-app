@@ -14,7 +14,6 @@ import com.zk.samplenewsapp.mainLIst.ArticleRecyclerViewAdapter
 import com.zk.samplenewsapp.mainLIst.OnItemClickListener
 import com.zk.samplenewsapp.mainLIst.VerticalSpaceItemDecoration
 import com.zk.samplenewsapp.model.Article
-import com.zk.samplenewsapp.model.Articles
 import com.zk.samplenewsapp.model.Event
 import com.zk.samplenewsapp.model.ListViewState
 import com.zk.samplenewsapp.viewModel.MainViewModel
