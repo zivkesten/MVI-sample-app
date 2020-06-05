@@ -1,7 +1,7 @@
 package com.zk.samplenewsapp.viewModel
 
 import androidx.lifecycle.*
-import com.zk.samplenewsapp.model.Articles
+import com.zk.samplenewsapp.model.*
 import com.zk.samplenewsapp.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel

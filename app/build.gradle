@@ -44,13 +44,13 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "BASE_URL", "\"https://newsapi.org/v2/\""
-            resValue "string", "base_url", "dedgfdbug"
+            buildConfigField "String", "NEWS_API_KEY", "\"cec6b7a9137b4863bf1fc13cb3301627\""/*"<YOUR-KEY_HERE>"*/
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", "\"release\""
-            resValue "string", "base_url", "release"
+            buildConfigField "String", "BASE_URL", "\"https://newsapi.org/v2/\""
+            buildConfigField "String", "NEWS_API_KEY", "<YOUR-KEY_HERE>"
         }
     }
 
@@ -66,6 +66,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     //lifecycle
     def lifecycle_version = "2.3.0-alpha03"
