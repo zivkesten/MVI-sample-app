@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.zk.samplenewsapp.R
 import com.zk.samplenewsapp.databinding.ArticleListItemBinding
 import com.zk.samplenewsapp.model.Article
 
@@ -38,7 +39,10 @@ class ArticleRecyclerViewAdapter(private var values: List<Article> = ArrayList()
             with(binding) {
                 primaryText.text = item.title
                 subText.text = item.description
-                Picasso.get().load(item.urlToImage).into(mediaImage)
+                Picasso.get()
+                    .load(item.urlToImage)
+                    .placeholder(R.drawable.progress_animation)
+                    .into(mediaImage)
                 binding.root.setOnClickListener {
                     listener.onItemClick(item)
                 }

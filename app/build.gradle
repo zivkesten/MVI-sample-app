@@ -44,7 +44,7 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "BASE_URL", "\"https://newsapi.org/v2/\""
-            buildConfigField "String", "NEWS_API_KEY", "<YOUR-KEY_HERE>"
+            buildConfigField "String", "NEWS_API_KEY", "\"cec6b7a9137b4863bf1fc13cb3301627\""/*"<YOUR-KEY_HERE>"*/
         }
         release {
             minifyEnabled false
