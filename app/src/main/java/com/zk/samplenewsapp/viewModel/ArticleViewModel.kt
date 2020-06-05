@@ -11,18 +11,18 @@ class ArticleViewModel : ViewModel() {
 
     private var item: Article? = null
 
-    private val viewState = MutableLiveData<ViewState>()
+    private val viewState = MutableLiveData<DetailViewState>()
 
     private val viewAction = MutableLiveData<ViewEffect>()
 
-    val obtainState: LiveData<ViewState> = viewState
+    val obtainStateDetail: LiveData<DetailViewState> = viewState
 
     val obtainAction: LiveData<ViewEffect> = viewAction
 
     fun article(article: Article?) {
 
         article?.let {
-            val state = ViewState(
+            val state = DetailViewState(
                 article.urlToImage,
                 article.title?: "",
                 article.description?: ""
@@ -34,9 +34,9 @@ class ArticleViewModel : ViewModel() {
 
     fun event(event: Event) {
         when(event) {
-            is Event.screenLoadEvent -> Log.d("Zivi", "article screen loaded")
-            is Event.tapLink -> viewAction.postValue(ViewEffect.OpenLinkExternally(item))
-            is Event.addToFavouritesEvent -> viewAction.postValue(ViewEffect.ShowSnackBar(
+            is Event.ScreenLoadEvent -> Log.d("Zivi", "article screen loaded")
+            is Event.ClickLink -> viewAction.postValue(ViewEffect.OpenLinkExternally(item))
+            is Event.AddToFavouritesEvent -> viewAction.postValue(ViewEffect.ShowSnackBar(
                 R.string.button_result_text
             ))
         }

@@ -11,7 +11,7 @@ import com.zk.samplenewsapp.model.Article
 
 class ArticleRecyclerViewAdapter(private var values: List<Article> = ArrayList(), private val listener: OnItemClickListener) : RecyclerView.Adapter<ArticleRecyclerViewAdapter.ViewHolder>() {
 
-    fun update(articles: ArrayList<Article>) {
+    fun update(articles: List<Article>) {
         if (values.isEmpty()) {
             values = articles
             notifyDataSetChanged()

@@ -14,7 +14,7 @@ import com.zk.samplenewsapp.viewModel.ArticleViewModel
 import com.zk.samplenewsapp.databinding.ArticleFragmentBinding
 import com.zk.samplenewsapp.model.Event
 import com.zk.samplenewsapp.model.ViewEffect
-import com.zk.samplenewsapp.model.ViewState
+import com.zk.samplenewsapp.model.DetailViewState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ArticleFragment : Fragment() {
@@ -32,33 +32,44 @@ class ArticleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = ArticleFragmentBinding.inflate(inflater, container, false)
+        setClickEvents()
+        return binding.root
+    }
+
+    private fun setClickEvents() {
         binding.link.setOnClickListener {
-            viewModel.event(Event.tapLink)
+            viewModel.event(Event.ClickLink)
         }
 
-        binding.fab.setOnClickListener { view ->
-            viewModel.event(Event.addToFavouritesEvent)
+        binding.fab.setOnClickListener {
+            viewModel.event(Event.AddToFavouritesEvent)
         }
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.event(Event.screenLoadEvent)
-        viewModel.obtainState.observe(viewLifecycleOwner, Observer {
-            renderState(it)
-        })
+        viewModel.event(Event.ScreenLoadEvent)
+        observeViewState()
+        observeViewEffects()
+    }
 
+    private fun observeViewEffects() {
         viewModel.obtainAction.observe(viewLifecycleOwner, Observer {
             trigger(it)
         })
     }
 
-    private fun renderState(state: ViewState) {
+    private fun observeViewState() {
+        viewModel.obtainStateDetail.observe(viewLifecycleOwner, Observer {
+            renderState(it)
+        })
+    }
+
+    private fun renderState(stateDetail: DetailViewState) {
         with(binding) {
-            title.text = state.title
-            content.text = state.description
-            Picasso.get().load(state.backDrop).into(backdrop)
+            title.text = stateDetail.title
+            content.text = stateDetail.description
+            Picasso.get().load(stateDetail.backDrop).into(backdrop)
         }
     }
 
