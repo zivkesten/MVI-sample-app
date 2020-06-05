@@ -12,13 +12,7 @@ val apiModule = module {
     }
 }
 
-class Constants {
-    companion object {
-        const val KEY = "cec6b7a9137b4863bf1fc13cb3301627"
-    }
-}
-
 interface NewsApi {
-    @GET("top-headlines?country=il")
-    suspend fun getNews(@Query("apiKey") key: String = Constants.KEY): Articles?
+    @GET("top-headlines?country=us")
+    suspend fun getNews(): Articles?
 }

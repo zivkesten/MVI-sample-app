@@ -1,6 +1,7 @@
 package com.zk.samplenewsapp.networking
 
 import com.zk.samplenewsapp.BuildConfig
+import com.zk.samplenewsapp.repository.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -32,7 +33,8 @@ private fun provideOkHttpClient(): OkHttpClient {
     if (BuildConfig.DEBUG) {
         val httpLoggingInterceptor =
             HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
-        builder.addInterceptor(httpLoggingInterceptor)
+        builder.addInterceptor(AuthInterceptor())
+		builder.addInterceptor(httpLoggingInterceptor)
     }
     return builder.build()
 }

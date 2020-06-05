@@ -4,25 +4,38 @@ import androidx.lifecycle.*
 import com.zk.samplenewsapp.model.*
 import com.zk.samplenewsapp.repository.Repository
 import kotlinx.coroutines.Dispatchers
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-val viewModelModule = module {
+class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    viewModel { MainViewModel(get()) }
-}
+	private val viewState = MutableLiveData<ListViewState>()
 
-class MainViewModel(private val repository: Repository): ViewModel() {
+	private val viewAction = MutableLiveData<ViewEffect>()
 
-    private val newsLiveData = MutableLiveData<Articles?>()
+	val obtainState: LiveData<ListViewState> = viewState
 
-    suspend fun getNewsFromApi() {
-        newsLiveData.postValue(repository.getNews())
-    }
+	val obtainViewEffects: LiveData<ViewEffect> = viewAction
 
-    val fragmentContent: LiveData<Articles?> = newsLiveData.switchMap { articles ->
-        liveData(Dispatchers.IO) {
-            emit(articles)
-        }
-    }
+	fun event(event: Event) {
+		when(event) {
+			is Event.ScreenLoadEvent, Event.Refresh -> getNewsFromApi()
+			is Event.ItemClicked -> viewAction.postValue(ViewEffect.TransitionToScreen(event.article))
+		}
+	}
+
+	private fun getNewsFromApi() {
+		viewModelScope.launch {
+			val news = loadNewsFromApi()
+			news?.let {
+				val state = ListViewState(news.articles)
+				viewState.postValue(state)
+			}
+		}
+	}
+
+	private suspend fun loadNewsFromApi() =
+		withContext(Dispatchers.IO) {
+			repository.getNews()
+		}
 }
