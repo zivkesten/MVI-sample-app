@@ -1,6 +1,5 @@
 package com.zk.samplenewsapp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,7 @@ import com.zk.samplenewsapp.model.*
 
 class ArticleViewModel : ViewModel() {
 
-    private var item: Article? = null
+    private var data: Article? = null
 
     private val viewState = MutableLiveData<DetailViewState>()
 
@@ -19,24 +18,29 @@ class ArticleViewModel : ViewModel() {
 
     val obtainAction: LiveData<ViewEffect> = viewAction
 
-    fun article(article: Article?) {
+    private var currentViewState = DetailViewState()
+        set(value) {
+            viewState.value = value
+            field = value
+        }
 
+    private fun handleScreenLoadState(article: Article?) {
         article?.let {
-            val state = DetailViewState(
-                article.urlToImage,
-                article.title?: "",
-                article.description?: ""
+            currentViewState =
+                currentViewState.copy(
+                backDrop = article.urlToImage,
+                title = article.title?: "",
+                description = article.description?: ""
             )
-            item = article
-            viewState.postValue(state)
+            data = article
         }
     }
 
     fun event(event: Event) {
         when(event) {
-            is Event.ScreenLoadEvent -> Log.d("Zivi", "article screen loaded")
-            is Event.ClickLink -> viewAction.postValue(ViewEffect.OpenLinkExternally(item))
-            is Event.AddToFavouritesEvent -> viewAction.postValue(ViewEffect.ShowSnackBar(
+            is Event.DataReceived -> handleScreenLoadState(event.data)
+            is Event.LinkClicked -> viewAction.postValue(ViewEffect.NavigateToLink(data?.url))
+            is Event.AddToFavouritesClicked -> viewAction.postValue(ViewEffect.ShowSnackBar(
                 R.string.button_result_text
             ))
         }

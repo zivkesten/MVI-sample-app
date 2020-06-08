@@ -7,39 +7,34 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="16dp"
             app:layout_constraintEnd_toStartOf="@+id/title"
             app:layout_constraintStart_toStartOf="@+id/title"
             tools:context=".views.detail.ArticleFragment">
 
             <ImageView
                 android:id="@+id/backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:scaleType="fitXY"
-                app:layout_constraintDimensionRatio="H,16:9"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:padding="16dp"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/backdrop" />
+                app:layout_constraintTop_toBottomOf="@+id/fab" />
 
             <TextView
                 android:id="@+id/content"
@@ -47,8 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:textSize="20sp"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="@+id/title"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/title"
                 app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -59,7 +54,6 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/go_to_article"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/content" />
 
@@ -68,12 +62,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/fab_margin"
+                app:layout_constraintBottom_toBottomOf="@+id/backdrop"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@android:drawable/ic_dialog_email" />
+                app:layout_constraintTop_toBottomOf="@+id/backdrop"
+                app:srcCompat="@android:drawable/ic_input_add" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

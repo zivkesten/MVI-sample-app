@@ -38,17 +38,16 @@ class ArticleFragment : Fragment() {
 
     private fun setClickEvents() {
         binding.link.setOnClickListener {
-            viewModel.event(Event.ClickLink)
+            viewModel.event(Event.LinkClicked)
         }
 
         binding.fab.setOnClickListener {
-            viewModel.event(Event.AddToFavouritesEvent)
+            viewModel.event(Event.AddToFavouritesClicked)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.event(Event.ScreenLoadEvent)
         observeViewState()
         observeViewEffects()
     }
@@ -75,9 +74,9 @@ class ArticleFragment : Fragment() {
 
     private fun trigger(effect: ViewEffect) {
         when(effect) {
-            is ViewEffect.OpenLinkExternally -> {
+            is ViewEffect.NavigateToLink -> {
                 val browserIntent =
-                    Intent(Intent.ACTION_VIEW, Uri.parse(effect.article?.url))
+                    Intent(Intent.ACTION_VIEW, Uri.parse(effect.url))
                 startActivity(browserIntent)
             }
             is ViewEffect.ShowSnackBar -> {

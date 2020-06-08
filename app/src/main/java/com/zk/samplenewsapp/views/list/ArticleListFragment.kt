@@ -49,7 +49,7 @@ class ArticleListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, On
 		setupBinding()
 		observeViewState()
 		if (savedInstanceState == null) {
-			viewModel.event(Event.ScreenLoadEvent)
+			viewModel.event(Event.ScreenLoad)
 		}
 	}
 
@@ -74,10 +74,10 @@ class ArticleListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, On
 	}
 
 	override fun onRefresh() {
-		viewModel.event(Event.Refresh)
+		viewModel.event(Event.SwipeToRefreshEvent)
 	}
 
 	override fun onItemClick(item: Article) {
-		viewModel.event(Event.ItemClicked(item))
+		viewModel.event(Event.ListItemClicked(item))
 	}
 }
